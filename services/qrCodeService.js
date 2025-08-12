@@ -9,7 +9,7 @@ export async function generateAndSaveQRCode(text, filename) {
       width: 300,
     });
 
-    console.log(`QR Code gerado: ${qrDir}/${filename}`);
+    console.log(`QR Code gerado: ${base64}`);
     return base64;
   } catch (err) {
     throw new Error("Não foi possível gerar o QR Code.");
