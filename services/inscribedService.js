@@ -1,4 +1,4 @@
-import Inscribed from "../../models/Inscribed.js";
+import Inscribed from "../models/Inscribed.js";
 import { generateAndSaveQRCode } from "./qrCodeService.js";
 import { sendEmail } from "./emailService.js";
 

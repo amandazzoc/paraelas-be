@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from "./config/db-connection.js"
-import router from "./api/routes/inscribedRoutes.js";
+import router from "./routes/inscribedRoutes.js";
 import cors from "cors";
 import path from "path";
 
