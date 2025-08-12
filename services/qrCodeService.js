@@ -1,6 +1,6 @@
 import QRCode from "qrcode";
 
-export async function generateAndSaveQRCode(text, filename) {
+export async function generateAndSaveQRCode(text) {
   try {
     console.log(`Gerando QR Code para: ${text}`);
 

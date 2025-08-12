@@ -35,15 +35,13 @@ class inscribedService {
             await newInscribed.save();
 
             const url = `${process.env.BASE_URL}/inscrito/${newInscribed._id}`;
-            const filename = `qrcode_${newInscribed._id}.png`;
-            const qrCodePath = await generateAndSaveQRCode(url, filename);
+            const qrCodeBase64 = await generateAndSaveQRCode(url);
 
-            if (!qrCodePath) {
+            if (!qrCodeBase64) {
                 throw new Error("Não foi possível gerar o QR Code.");
             }
 
-            const qrCodeUrl = `${process.env.BASE_URL}/${qrCodePath}`;
-            await sendEmail(email, qrCodePath, qrCodeUrl);
+            await sendEmail(email, qrCodeBase64);
 
             console.log(`Inscrito criado com sucesso: ${newInscribed._id}`);
             return newInscribed;
