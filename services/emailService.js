@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import { getEmailHtml } from "./emailTemplate.ts";
+import { getEmailHtml } from "./emailTemplate.js";
 
 const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
