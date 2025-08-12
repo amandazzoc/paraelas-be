@@ -3,8 +3,6 @@ import mongoose from "./config/db-connection.js"
 import router from "./routes/inscribedRoutes.js";
 import cors from "cors";
 
-// mongoose.connect("mongodb://localhost:27017/focusquest");
-
 const app = express();
 
 app.use(cors())
