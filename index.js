@@ -10,6 +10,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use("/", router);
 
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+
 const port = 4000;
 app.listen(port, (error) => {
   if (error) {

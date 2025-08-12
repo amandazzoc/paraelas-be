@@ -1,4 +1,4 @@
-import InscribedController from "../controllers/InscribedController.js";  
+import InscribedController from "../controllers/inscribedController.js";  
 import multer from "multer"; 
 import express from "express";
 import path from "path";
