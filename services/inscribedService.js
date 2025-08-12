@@ -10,8 +10,19 @@ class inscribedService {
         }
     }
 
+    async emailExists(email) {
+        const user = await Inscribed.findOne({ email });
+        return !!user;
+    }
+
     async create(name, email, phone, agreeLGPD, adult, AuthorizationTerm) {
         try {
+            const exists = await this.emailExists(email);
+            
+            if (exists) {
+                throw new Error("Email already exists");
+            }
+
             const newInscribed = new Inscribed({
                 name,
                 email,

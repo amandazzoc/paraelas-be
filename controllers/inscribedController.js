@@ -14,6 +14,11 @@ const createInscribed = async (req, res) => {
     const AuthorizationTerm = req.file ? req.file.path.replace(/\\/g, "/") : null;
 
     try {
+        const exists = await inscribedService.emailExists(email);
+        if (exists) {
+            return res.status(409).json({ message: "Email já cadastrado" });
+        }
+        
         const newInscribed = await inscribedService.create(name, email, phone, agreeLGPD, adult, AuthorizationTerm);
         res.status(201).json(newInscribed);
     } catch (error) {
