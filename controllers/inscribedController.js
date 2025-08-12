@@ -1,4 +1,5 @@
 import inscribedService from "../services/inscribedService.js";
+import { uploadPDF } from "../services/googleDriveService.js";
 
 const getAllInscribed = async (req, res) => {
     try {
@@ -11,9 +12,14 @@ const getAllInscribed = async (req, res) => {
 
 const createInscribed = async (req, res) => {
     const { name, email, phone, agreeLGPD, adult } = req.body;
-    const AuthorizationTerm = req.file ? req.file.path.replace(/\\/g, "/") : null;
+    let AuthorizationTerm = null;
 
     try {
+        if (req.file) {
+            const driveResult = await uploadPDF(req.file.buffer, req.file.originalname);
+            AuthorizationTerm = driveResult.webViewLink; 
+        }
+
         const exists = await inscribedService.emailExists(email);
         if (exists) {
             return res.status(409).json({ message: "Email já cadastrado" });
