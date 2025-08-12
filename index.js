@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "./config/db-connection.js"
 import router from "./routes/inscribedRoutes.js";
 import cors from "cors";
+import path from "path";
 
 const app = express();
 
