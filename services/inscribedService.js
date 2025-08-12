@@ -1,4 +1,6 @@
 import Inscribed from "../models/Inscribed.js";
+import { generateAndSaveQRCode } from "./qrCodeService.js";
+import { sendEmail } from "./emailService.js";
 
 class inscribedService {
     async getAll() {
@@ -6,7 +8,7 @@ class inscribedService {
             const inscribeds = await Inscribed.find();
             return inscribeds;
         } catch (error) {
-            throw new Error("Could not fetch inscribed records");
+            throw new Error("Não foi possível buscar os inscritos.");
         }
     }
 
@@ -18,9 +20,8 @@ class inscribedService {
     async create(name, email, phone, agreeLGPD, adult, AuthorizationTerm) {
         try {
             const exists = await this.emailExists(email);
-            
             if (exists) {
-                throw new Error("Email already exists");
+                throw new Error("Este e-mail já está cadastrado.");
             }
 
             const newInscribed = new Inscribed({
@@ -32,9 +33,21 @@ class inscribedService {
                 AuthorizationTerm
             });
             await newInscribed.save();
+
+            const url = `${process.env.BASE_URL}/inscrito/${newInscribed._id}`;
+            const filename = `qrcode_${newInscribed._id}.png`;
+            const qrCodePath = await generateAndSaveQRCode(url, filename);
+
+            if (!qrCodePath) {
+                throw new Error("Não foi possível gerar o QR Code.");
+            }
+            
+            const qrCodeUrl = `${process.env.BASE_URL}/${qrCodePath}`;
+            await sendEmail(email, qrCodeUrl);
+
             return newInscribed;
         } catch (error) {
-            throw new Error("Could not create inscribed record");
+            throw new Error(error.message || "Não foi possível criar o inscrito.");
         }
     }
 
@@ -42,11 +55,11 @@ class inscribedService {
         try {
             const inscribed = await Inscribed.findById(id);
             if (!inscribed) {
-                throw new Error("Inscribed record not found");
+                throw new Error("Inscrito não encontrado.");
             }
             return inscribed;
         } catch (error) {
-            throw new Error("Could not fetch inscribed record");
+            throw new Error("Não foi possível buscar o inscrito.");
         }
     }
 }
