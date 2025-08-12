@@ -12,8 +12,10 @@ const transporter = nodemailer.createTransport({
 });
 
 export async function sendEmail(email, qrCodePath, qrCodeCid) {
-    const html = getEmailHtml();
+  const html = getEmailHtml();
 
+  console.log(`Enviando e-mail para ${email} com QR Code: ${qrCodePath}`);
+  
   await transporter.sendMail({
     from: process.env.EMAIL_FROM,
     to: email,
@@ -27,4 +29,6 @@ export async function sendEmail(email, qrCodePath, qrCodeCid) {
       },
     ],
   });
+
+  console.log(`E-mail enviado para ${email}`);
 }

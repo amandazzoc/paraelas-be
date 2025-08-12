@@ -41,10 +41,11 @@ class inscribedService {
             if (!qrCodePath) {
                 throw new Error("Não foi possível gerar o QR Code.");
             }
-            
-            const qrCodeUrl = `${process.env.BASE_URL}/${qrCodePath}`;
-            await sendEmail(email, qrCodeUrl);
 
+            const qrCodeUrl = `${process.env.BASE_URL}/${qrCodePath}`;
+            await sendEmail(email, qrCodePath, qrCodeUrl);
+
+            console.log(`Inscrito criado com sucesso: ${newInscribed._id}`);
             return newInscribed;
         } catch (error) {
             throw new Error(error.message || "Não foi possível criar o inscrito.");
