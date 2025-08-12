@@ -24,7 +24,8 @@ export async function sendEmail(email, qrCodePath, qrCodeCid) {
     attachments: [
       {
         filename: "qrcode.png",
-        path: qrCodePath,
+        content: qrCodeBase64.split("base64,")[1], 
+        encoding: "base64",
         cid: qrCodeCid,
       },
     ],
