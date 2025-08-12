@@ -22,7 +22,7 @@ const inscribedSchema = new mongoose.Schema({
         required: true,
     },
     AuthorizationTerm: {
-        type: Buffer
+        type: String
     }
 });
 

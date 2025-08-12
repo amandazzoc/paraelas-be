@@ -11,7 +11,7 @@ const getAllInscribed = async (req, res) => {
 
 const createInscribed = async (req, res) => {
     const { name, email, phone, agreeLGPD, adult } = req.body;
-    const AuthorizationTerm = req.file ? req.file.buffer : null;
+    const AuthorizationTerm = req.file ? req.file.path : null;
 
     try {
         const newInscribed = await inscribedService.create(name, email, phone, agreeLGPD, adult, AuthorizationTerm);
